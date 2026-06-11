@@ -14,7 +14,7 @@ echo "Starting Legalo CMS Servers..."
 echo ""
 
 # Start Backend
-echo "Starting Backend Server (Port 5000)..."
+echo "Starting Backend Server (Port 5000)..." 
 cd backend
 npm run dev &
 BACKEND_PID=$!
