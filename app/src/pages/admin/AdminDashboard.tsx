@@ -100,8 +100,8 @@ const AdminDashboard = () => {
       const totalSubscribers = newsletterResponse.data.data?.totalSubscribers || 0;
 
       // Calculate stats
-      const publishedBlogs = blogs.filter((b) => b.status === 'published');
-      const totalViews = blogs.reduce((sum, b) => sum + (b.views || 0), 0);
+      const publishedBlogs = blogs.filter((b: any) => b.status === 'published');
+      const totalViews = blogs.reduce((sum: number, b: any) => sum + (b.views || 0), 0);
 
       setStats({
         totalBlogs: blogs.length,
