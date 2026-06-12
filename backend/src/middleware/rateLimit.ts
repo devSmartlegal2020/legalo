@@ -70,4 +70,5 @@ export const keywordRecommendationLimiter = rateLimit({
     // Use user ID if available, otherwise IP
     return (req as any).user?._id || req.ip || 'anonymous';
   },
+  validate: { default: false },
 });
