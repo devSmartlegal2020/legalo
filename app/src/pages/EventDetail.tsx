@@ -25,6 +25,7 @@ import {
   type EventData 
 } from '@/data/eventsData';
 import { eventAPI } from '@/services/api';
+import { toast } from 'sonner';
 
 // Fallback placeholder images
 const FALLBACK_EVENT_IMAGE = 'https://placehold.co/800x400/d93a3a/ffffff?text=Legalo+Event';
@@ -76,14 +77,32 @@ const EventDetail: React.FC = () => {
     }
   };
 
-  const handleRegistrationSubmit = (e: React.FormEvent) => {
+  const handleRegistrationSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
+
+    try {
+      await eventAPI.register(slug!, registrationForm);
+      toast.success('Pendaftaran berhasil! Silakan cek email Anda untuk konfirmasi.');
+      
+      // Reset form
+      setRegistrationForm({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        message: ''
+      });
+      
+      // Refresh event data to update seatsAvailable
+      fetchEvent();
+    } catch (error: any) {
+      console.error('Event registration error:', error);
+      const errMsg = error.response?.data?.message || 'Gagal mendaftar event. Silakan coba lagi.';
+      toast.error(errMsg);
+    } finally {
       setIsSubmitting(false);
-      alert('Registration submitted successfully! Check your email for confirmation.');
-    }, 1500);
+    }
   };
 
   const handleImageError = () => {

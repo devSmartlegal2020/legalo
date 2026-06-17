@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { toast } from 'sonner';
+import { consultationAPI } from '@/services/api';
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -54,23 +55,29 @@ const ConsultationModal = ({ isOpen, onClose }: ConsultationModalProps) => {
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      await consultationAPI.create(formData);
 
-    // Success
-    toast.success('Terima kasih! Konsultasi Anda telah terkirim. Tim kami akan menghubungi Anda segera.');
-    
-    // Reset form
-    setFormData({
-      fullName: '',
-      email: '',
-      phone: '',
-      serviceType: '',
-      message: ''
-    });
-    
-    setIsSubmitting(false);
-    onClose();
+      // Success
+      toast.success('Terima kasih! Konsultasi Anda telah terkirim. Tim kami akan menghubungi Anda segera.');
+      
+      // Reset form
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        serviceType: '',
+        message: ''
+      });
+      
+      onClose();
+    } catch (error: any) {
+      console.error('Error submitting consultation:', error);
+      const errMsg = error.response?.data?.message || 'Gagal mengirim permohonan konsultasi. Silakan coba lagi.';
+      toast.error(errMsg);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

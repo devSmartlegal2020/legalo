@@ -11,6 +11,9 @@ import ebookRoutes from './ebooks';
 import newsletterRoutes from './newsletter';
 import ctaRoutes from './ctas';
 import settingsRoutes from './settings';
+import consultationRoutes from './consultations';
+import eventRegistrationRoutes from './eventRegistrations';
+
 
 const router = Router();
 
@@ -26,5 +29,9 @@ router.use('/ebooks', ebookRoutes);
 router.use('/newsletter', newsletterRoutes);
 router.use('/ctas', ctaRoutes);
 router.use('/settings', settingsRoutes);
+router.use('/consultations', consultationRoutes);
+router.use('/events', eventRegistrationRoutes);
+
+
 
 export default router;

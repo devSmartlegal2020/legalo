@@ -272,6 +272,8 @@ export const eventAPI = {
   getSchedule: () => api.get('/events/public/events/schedule'),
   getRelated: (slug: string, limit?: number) =>
     api.get(`/events/public/events/${slug}/related`, { params: { limit } }),
+  register: (slug: string, data: { name: string; email: string; phone?: string; company?: string; message?: string }) =>
+    api.post(`/events/public/events/${slug}/register`, data),
 };
 
 // Promotion API
@@ -348,4 +350,17 @@ export const newsletterAPI = {
     api.post('/newsletter/unsubscribe', { email }),
 };
 
+// Consultation API
+export const consultationAPI = {
+  create: (data: { fullName: string; email: string; phone: string; serviceType: string; message?: string }) =>
+    api.post('/consultations', data),
+  getAll: (params?: { page?: number; limit?: number; status?: string; serviceType?: string; search?: string }) =>
+    api.get('/consultations', { params }),
+  updateStatus: (id: string, status: string) =>
+    api.patch(`/consultations/${id}/status`, { status }),
+  delete: (id: string) =>
+    api.delete(`/consultations/${id}`),
+};
+
 export default api;
+

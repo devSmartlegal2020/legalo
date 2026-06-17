@@ -261,3 +261,29 @@ export interface IEbookDownload {
   userAgent?: string;
   downloadedAt: Date;
 }
+
+export interface IConsultation {
+  _id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  serviceType: string;
+  message?: string;
+  status: 'pending' | 'contacted' | 'completed';
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface IEventRegistration {
+  _id: string;
+  eventId: any;
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  message?: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+

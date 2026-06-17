@@ -10,3 +10,7 @@ export { default as NewsletterSubscriber } from './NewsletterSubscriber';
 export { default as EbookDownload } from './EbookDownload';
 export { default as Setting } from './Setting';
 export { default as KeywordCache } from './KeywordCache';
+export { default as Consultation } from './Consultation';
+export { default as EventRegistration } from './EventRegistration';
+
+

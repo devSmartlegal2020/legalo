@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
+import { newsletterAPI } from '@/services/api';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,12 +62,26 @@ const EbookCTASection = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    toast.success('Berhasil berlangganan newsletter! Cek email Anda untuk konfirmasi.');
-    setFormData({ name: '', email: '', company: '', consent: false });
-    setIsSubmitting(false);
+    try {
+      const response = await newsletterAPI.subscribe({
+        email: formData.email,
+        name: formData.name,
+        signupSource: 'ebook_cta',
+      });
+
+      if (response.data.data.status === 'pending') {
+        toast.success('Silakan cek email Anda untuk mengonfirmasi langganan newsletter!');
+      } else {
+        toast.success('Berhasil berlangganan newsletter!');
+      }
+      setFormData({ name: '', email: '', company: '', consent: false });
+    } catch (error: any) {
+      console.error('Ebook CTA newsletter subscription error:', error);
+      const errMsg = error.response?.data?.message || 'Gagal berlangganan. Silakan coba lagi.';
+      toast.error(errMsg);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const benefits = [
